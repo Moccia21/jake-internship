@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import jQuery from 'jquery';
+
+window.jQuery = jQuery;
+window.$ = jQuery;
 
 ReactDOM.render(
   <React.StrictMode>
