@@ -23,6 +23,7 @@ const HotCollections = () => {
   }, []);
 
   const settings = {
+    speed: 300,
     arrows: true,
     infinite: true,
     slidesToShow: 4,
