@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import AuthorImage from "../../images/author_thumbnail.jpg";
-import nftImage from "../../images/nftImage.jpg";
 import axios from "axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -69,7 +67,7 @@ const NewItems = () => {
                 className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
                 key={nft.id}
                 >
-                  <div className="nft__item" style={{minWidth: '300px'}}>
+                  <div className="nft__item">
                     <div className="author_list_pp">
                       <Link
                         to="/author"
