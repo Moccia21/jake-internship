@@ -11,6 +11,7 @@
 @import "./css/colors/scheme-01.css";
 @import "./css/styles/coloring.css";
 
+
 .slick-prev:before, 
 .slick-next:before {
     background-color: #696464;
@@ -70,3 +71,137 @@
       background-color: #e0e0e0;
     }
   }
+
+.nft__item {
+    width: 300px;
+    height: 440px;
+}
+
+@media (max-width: 1286px) {
+    .nft__item {
+        width: 260px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .nft__item {
+        width: 225px;
+    }
+}
+
+@media (max-width: 980px) {
+    .nft__item {
+        width: 300px;
+    }
+}
+
+@media (max-width: 780px) {
+    .nft__item {
+        width: 200px;
+        height: 440px;
+    }
+}
+
+@media (max-width: 580px) {
+    .nft__item {
+        width: 320px;
+        height: 440px;
+    }
+}
+
+
+.slick-prev:before, 
+.slick-next:before {
+    background-color: #696464;
+    border-radius: 50%;
+  }
+
+  .skeleton-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .skeleton_author-image {
+    width: 60px;
+    height: 60px;
+    background: #e0e0e0;
+    border-radius: 50px;
+  }
+
+  .skeleton-image {
+    width: 312px;
+    height: 175px; /* Adjust image height */
+    background: #e0e0e0;
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+
+  .skeleton-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  .skeleton-title {
+    width: 70px;
+    height: 20px;
+    background: #e0e0e0;
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+
+  .skeleton-code {
+    width: 50px;
+    height: 17px;
+    background: #e0e0e0;
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+  
+  @keyframes pulse {
+    0% {
+      background-color: #e0e0e0;
+    }
+    50% {
+      background-color: #f0f0f0;
+    }
+    100% {
+      background-color: #e0e0e0;
+    }
+  }
+.nft__item {
+    width: 300px;
+    height: 440px;
+}
+
+@media (max-width: 1286px) {
+    .nft__item {
+        width: 260px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .nft__item {
+        width: 225px;
+    }
+}
+
+@media (max-width: 980px) {
+    .nft__item {
+        width: 300px;
+    }
+}
+
+@media (max-width: 780px) {
+    .nft__item {
+        width: 200px;
+        height: 440px;
+    }
+}
+
+@media (max-width: 580px) {
+    .nft__item {
+        width: 320px;
+        height: 440px;
+    }
+}
