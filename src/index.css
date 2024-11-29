@@ -148,4 +148,49 @@ Hot Collections Section
       width: 70px;
       animation: pulse 1.5s infinite ease-in-out;
     }
+
+    /* 
+    
+    Explore Items Section
+    
+    */
+
+    /* Skeleton Loader Styles */
+.skeleton-item {
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  padding: 15px;
+  height: 400px; /* Adjust based on the item size */
+}
+
+.skeleton-header {
+  background-color: #d0d0d0;
+  height: 30px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.skeleton-countdown {
+  background-color: #d0d0d0;
+  height: 20px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+}
+
+.skeleton-image {
+  background-color: #d0d0d0;
+  height: 250px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  width: 270px;
+}
+
+.skeleton-title,
+.skeleton-price {
+  background-color: #d0d0d0;
+  height: 20px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
   
