@@ -193,4 +193,60 @@ Hot Collections Section
   margin-bottom: 10px;
   border-radius: 4px;
 }
+
+
+/* 
+
+
+Item Details Section
+
+
+*/
+
+.details_skeleton {
+  background: #e0e0e0;
+  border-radius: 4px;
+  animation: loading 1.5s infinite ease-in-out;
+}
+
+.details_skeleton-title {
+  width: 300px;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+.details_skeleton-box {
+  width: 80px;
+  height: 30px;
+  background: none;
+}
+
+.details_skeleton-para {
+  width: 600px;
+  height: 80px;
+}
+
+.details_skeleton-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.details_skeleton-name {
+  width: 120px;
+  height: 20px;
+}
+
+.details_skeleton-price {
+  width: 75px;
+  height: 20px;
+}
+
+.details_skeleton-image {
+  width: 600px;
+  height: 400px;
+  margin-bottom: 20px;
+}
+
+
   
