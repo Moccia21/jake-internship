@@ -5,23 +5,23 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
 const Author = () => {
-  const { authorId } = useParams(); // Get the authorId from URL param
-  const [authorData, setAuthorData] = useState({});  // Initializing as an object
+  const { authorId } = useParams();
+  const [authorData, setAuthorData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); // State for handling errors
+  const [error, setError] = useState("");
+  const [followed, setFollowed] = useState(false); // State to track follow status
+  const [followersCount, setFollowersCount] = useState(0); // State to track followers count
 
-  // Fetching author data from the API
   async function getAuthorData() {
     try {
       const response = await axios.get(
         `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`
       );
-      console.log(response.data);  // Log the response to check the structure
-
-      setAuthorData(response.data); // Save the response data to the state
+      setAuthorData(response.data);
       setLoading(false);
+      setFollowersCount(response.data.followers); // Set the initial follower count from the fetched data
     } catch (error) {
-      console.error("Error fetching author data:", error);
+      console.error("Error fetching author items:", error);
       setError("Failed to load author data");
       setLoading(false);
     }
@@ -29,25 +29,84 @@ const Author = () => {
 
   useEffect(() => {
     getAuthorData();
-  }, [authorId]);  // Refetch data when authorId changes
+  }, [authorId]); // Added authorId as dependency
+
+  const handleFollowToggle = () => {
+    if (followed) {
+      setFollowersCount(followersCount - 1); // Decrease follower count if unfollowing
+    } else {
+      setFollowersCount(followersCount + 1); // Increase follower count if following
+    }
+    setFollowed(!followed); // Toggle the follow status
+  };
 
   if (loading) {
-    return <div>Loading...</div>;  // Show loading state while fetching
+    return (
+      <div id="wrapper">
+      <div className="no-bottom no-top" id="content">
+        <div id="top"></div>
+
+        <section
+          id="profile_banner"
+          aria-label="section"
+          className="text-light"
+          data-bgimage="url(images/author_banner.jpg) top"
+          style={{ background: `url(${AuthorBanner}) top` }}
+        ></section>
+
+        <section aria-label="section">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="d_profile de-flex">
+                  <div className="de-flex-col">
+                    <div className="profile_avatar">
+                      <div className="author_skeleton-img"></div>
+                      <i className="fa fa-check"></i>
+                      <div className="profile_name">
+                        <h4>
+                          <div className="author_skeleton-text"></div>
+                          <span className="profile_username author_skeleton-text"></span>
+                          <span id="wallet" className="profile_wallet author_skeleton-text">
+                            
+                          </span>
+                        
+                        </h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="profile_follow de-flex">
+                    <div className="de-flex-col">
+                      <div className="profile_follower">
+                  
+                      </div>
+                      <button 
+                         
+                        className="btn-main follow_skeleton">
+                        
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-md-12">
+                <div className="de_tab tab_simple">
+                  <AuthorItems />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    )
   }
 
-  if (error) {
-    return <div>{error}</div>;  // Show error message if there was an error
-  }
 
-  // Destructuring author data
-  const {
-    id,
-    authorName,
-    tag,
-    address,
-    authorImage,
-    followers,
-  } = authorData || {};  // Use fallback to prevent errors if authorData is undefined
+
+  if (error) return <div>{error}</div>;
+  if (!authorData) return <div>No author data found</div>;
 
   return (
     <div id="wrapper">
@@ -65,19 +124,18 @@ const Author = () => {
         <section aria-label="section">
           <div className="container">
             <div className="row">
-              <div className="col-md-12" key={id}>
-                {/* Profile Section */}
+              <div className="col-md-12">
                 <div className="d_profile de-flex">
                   <div className="de-flex-col">
                     <div className="profile_avatar">
-                      <img src={authorImage} alt={authorName} />
+                      <img src={authorData.authorImage} alt="" />
                       <i className="fa fa-check"></i>
                       <div className="profile_name">
                         <h4>
-                          {authorName}
-                          <span className="profile_username">{tag}</span>
+                          {authorData.authorName}
+                          <span className="profile_username">{authorData.tag}</span>
                           <span id="wallet" className="profile_wallet">
-                            {address}
+                            {authorData.address}
                           </span>
                           <button id="btn_copy" title="Copy Text">
                             Copy
@@ -88,10 +146,14 @@ const Author = () => {
                   </div>
                   <div className="profile_follow de-flex">
                     <div className="de-flex-col">
-                      <div className="profile_follower">{followers} followers</div>
-                      <Link to="#" className="btn-main">
-                        Follow
-                      </Link>
+                      <div className="profile_follower">
+                        {followersCount} followers
+                      </div>
+                      <button 
+                        onClick={handleFollowToggle} 
+                        className="btn-main">
+                        {followed ? "Unfollow" : "Follow"}
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -99,7 +161,7 @@ const Author = () => {
 
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-                  <AuthorItems authorId={authorId} />
+                  <AuthorItems />
                 </div>
               </div>
             </div>

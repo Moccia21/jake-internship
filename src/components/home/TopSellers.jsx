@@ -12,7 +12,6 @@ const TopSellers = () => {
     const { data } = await axios.get(
       "https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers"
     );
-
     setSellers(data);
     setLoading(false);
   }
@@ -24,10 +23,20 @@ const TopSellers = () => {
   useEffect(() => {
     // Initialize AOS
     AOS.init({
-      duration: 1300,  // Animation duration 
-      once: true,      
+      duration: 1300,  // Animation duration
+      once: true,      // Only trigger the animation once
     });
-  }, []);
+
+    // Refresh AOS after data is loaded to recalculate animations
+    if (!loading) {
+      AOS.refresh();  // Trigger a refresh so AOS can detect newly loaded content
+    }
+
+    return () => {
+      // Cleanup AOS when the component unmounts
+      AOS.refreshHard();
+    };
+  }, [loading]);  // Only run this effect when loading state changes
 
   if (loading) {
     // Display skeleton loader if data is still loading
@@ -51,7 +60,7 @@ const TopSellers = () => {
                     </div>
                     <div className="author_list_info">
                       <div className="seller_skeleton-name"></div>
-                        <div className="seller_skeleton-price"></div>
+                      <div className="seller_skeleton-price"></div>
                     </div>
                   </li>
                 ))}
@@ -64,7 +73,7 @@ const TopSellers = () => {
   }
 
   return (
-    <section id="section-popular" className="pb-5" >
+    <section id="section-popular" className="pb-5">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
@@ -73,7 +82,7 @@ const TopSellers = () => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
-          <div className="col-md-12">
+          <div className="col-md-12" data-aos="fade-in">
             <ol className="author_list">
               {sellers.map((seller) => (
                 <li key={seller.id}>

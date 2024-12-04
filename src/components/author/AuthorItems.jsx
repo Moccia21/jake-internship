@@ -1,50 +1,55 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import SkeletonLoader from "../UI/SkeletonLoader"; // Import the SkeletonLoader component
 
 const AuthorItems = () => {
-  const { authorId } = useParams(); // Get the authorId from URL param
-  const [authorItems, setAuthorItems] = useState([]); // Start with an empty array
+  const { authorId } = useParams();
+  const [nftCollection, setNftCollection] = useState([]);
+  const [authorImage, setAuthorImage] = useState("");
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(""); // For capturing errors
 
   async function getAuthorItems() {
     try {
       const response = await axios.get(
         `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`
       );
+      console.log("API Response:", response.data);
 
-      setAuthorItems(response.data);
-      setLoading(false); // Set loading to false after data fetch
+      // Extract nftCollection array and authorImage from the response
+      const { nftCollection: nfts, authorImage: image } = response.data;
+      setNftCollection(nfts || []);
+      setAuthorImage(image);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching author items:", error);
-      setLoading(false); // Set loading to false after an error
-      setError("Failed to load items"); // Set an error message
-      setAuthorItems([]); // Set empty array in case of error
+      setLoading(false);
     }
   }
 
   useEffect(() => {
     getAuthorItems();
-  }, [authorId]); // Fetch data whenever authorId changes
+  }, [authorId]); // Added authorId as dependency
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="row">
+       {[...Array(8)].map((_, index) => (
+          <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
+            <SkeletonLoader />
+          </div>
+        ))}
+      </div>
+    );
+      
   }
 
-  // Destructure properties for each item
-  const {
-    id,
-    authorImage,
-    nftCollection: { nftImage, nftId, title, price, likes },
-  } = authorItems;
-
   return (
-    <>
-      <div className="de_tab_content">
-        <div className="tab-1">
-          <div className="row">
-            <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={id}>
+    <div className="de_tab_content">
+      <div className="tab-1">
+        <div className="row">
+          {nftCollection.map((nft) => (
+            <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={nft.id}>
               <div className="nft__item">
                 <div className="author_list_pp">
                   <Link to="">
@@ -70,30 +75,30 @@ const AuthorItems = () => {
                       </div>
                     </div>
                   </div>
-                  <Link to={`/item-details/${nftId}`}>
+                  <Link to={`/item-details/${nft.nftId}`}>
                     <img
-                      src={nftImage}
+                      src={nft.nftImage}
                       className="lazy nft__item_preview"
                       alt=""
                     />
                   </Link>
                 </div>
                 <div className="nft__item_info">
-                  <Link to={`/item-details/${nftId}`}>
-                    <h4>{title}</h4>
+                  <Link to={`/item-details/${nft.nftId}`}>
+                    <h4>{nft.title}</h4>
                   </Link>
-                  <div className="nft__item_price">{price}</div>
+                  <div className="nft__item_price">{nft.price}</div>
                   <div className="nft__item_like">
                     <i className="fa fa-heart"></i>
-                    <span>{likes}</span>
+                    <span>{nft.likes}</span>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -180,7 +180,7 @@ Hot Collections Section
     
     */
 
-    /* Skeleton Loader Styles */
+
 .skeleton-item {
   background-color: #e0e0e0;
   border-radius: 8px;
@@ -271,6 +271,35 @@ Item Details Section
   width: 600px;
   height: 400px;
   margin-bottom: 20px;
+}
+
+/* 
+
+Author Section
+
+*/
+
+.author_skeleton-img {
+  background-color: #e0e0e0;
+  animation: loading 1.5s infinite ease-in-out;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.author_skeleton-text {
+  width: 130px;
+  height: 15px;
+  background-color: #e0e0e0;
+  animation: loading 1.5s infinite ease-in-out;
+  margin-bottom: 15px;
+}
+
+.follow_skeleton {
+  width: 125px;
+  height: 35px;
+  background-color: #e0e0e0;
+  animation: loading 1.5s infinite ease-in-out;
 }
 
 
