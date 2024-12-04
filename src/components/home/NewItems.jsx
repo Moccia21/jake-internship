@@ -5,6 +5,10 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Countdown from "../UI/Countdown";
+import AOS from "aos";
+import "aos/dist/aos.css"; // Import the AOS styles
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const NewItems = () => {
   const [items, setItems] = useState([]);
@@ -21,6 +25,14 @@ const NewItems = () => {
 
   useEffect(() => {
     getNFTs();
+  }, []);
+
+  useEffect(() => {
+    // Initialize AOS
+    AOS.init({
+      duration: 1300, // Animation duration
+      once: true,
+    });
   }, []);
 
   const settings = {
@@ -55,10 +67,67 @@ const NewItems = () => {
     ],
   };
 
-  if (loading) return <h2>Loading NFTs...</h2>;
+  if (loading) {
+    return (
+      <section id="section-items" className="no-bottom" data-aos="fade-in">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="text-center">
+                <h2>New Items</h2>
+                <div className="small-border bg-color-2"></div>
+              </div>
+            </div>
+            {[...Array(4)].map((_, index) => (
+              <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
+                <div className="nft__item">
+                  <div className="author_list_pp new_skeleton-author-img">
+                    <img className="lazy" />
+                    <i className="fa fa-check"></i>
+                  </div>
+
+                  <div className="nft__item_wrap">
+                    <div className="nft__item_extra">
+                      <div className="nft__item_buttons">
+                        <button>Buy Now</button>
+                        <div className="nft__item_share">
+                          <h4>Share</h4>
+                          <a href="" target="_blank" rel="noreferrer">
+                            <i className="fa fa-facebook fa-lg"></i>
+                          </a>
+                          <a href="" target="_blank" rel="noreferrer">
+                            <i className="fa fa-twitter fa-lg"></i>
+                          </a>
+                          <a href="">
+                            <i className="fa fa-envelope fa-lg"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="new_skeleton-img">
+                      <img className="lazy nft__item_preview" alt="" />
+                    </div>
+                  </div>
+                  <div className="nft__item_info">
+                    <h4 className="new_skeleton-text"></h4>
+
+                    <div className="nft__item_price new_skeleton-text"></div>
+                    <div className="nft__item_like">
+                      <i className="fa fa-heart"></i>
+                      <span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <section id="section-items" className="no-bottom">
+    <section id="section-items" className="no-bottom" data-aos="fade-in">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
@@ -95,7 +164,7 @@ const NewItems = () => {
                       <div></div>
                     )}
                   </div>
-                  
+
                   <div className="nft__item_wrap">
                     <div className="nft__item_extra">
                       <div className="nft__item_buttons">

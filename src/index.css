@@ -26,8 +26,10 @@ Hot Collections Section
   .skeleton-item {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    width: 100%;
+    width: 320px;
+    height: 320px;
+    margin: 24px;
+    background: none;
   }
 
   .skeleton_author-image {
@@ -122,6 +124,29 @@ Hot Collections Section
       }
     }
 
+    .new_skeleton-img {
+      width: 250px;
+      height: 250px;
+      background-color: #DDDB;
+      animation: pulse 1.5s infinite ease-in-out;
+      margin-top: 18px;
+    }
+
+    .new_skeleton-text {
+      width: 180px;
+      height: 30px;
+      background-color: #e0e0e0;
+      animation: pulse 1.5s infinite ease-in-out;
+
+    }
+
+    .new_skeleton-author-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50px;
+      background-color: #e0e0e0;
+      animation: pulse 1.5s infinite ease-in-out;
+    }
 
     /* 
     

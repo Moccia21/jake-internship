@@ -1,4 +1,4 @@
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
 import { Link, useParams } from "react-router-dom";
@@ -6,25 +6,48 @@ import axios from "axios";
 
 const Author = () => {
   const { authorId } = useParams(); // Get the authorId from URL param
-  const [authorData, setAuthorData] = useState([]);
+  const [authorData, setAuthorData] = useState({});  // Initializing as an object
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null); // State for handling errors
 
+  // Fetching author data from the API
   async function getAuthorData() {
     try {
       const response = await axios.get(
         `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`
       );
-      setAuthorData(response.data);
+      console.log(response.data);  // Log the response to check the structure
+
+      setAuthorData(response.data); // Save the response data to the state
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching author items:", error);
+      console.error("Error fetching author data:", error);
+      setError("Failed to load author data");
       setLoading(false);
     }
   }
 
   useEffect(() => {
     getAuthorData();
-  }, []);
+  }, [authorId]);  // Refetch data when authorId changes
+
+  if (loading) {
+    return <div>Loading...</div>;  // Show loading state while fetching
+  }
+
+  if (error) {
+    return <div>{error}</div>;  // Show error message if there was an error
+  }
+
+  // Destructuring author data
+  const {
+    id,
+    authorName,
+    tag,
+    address,
+    authorImage,
+    followers,
+  } = authorData || {};  // Use fallback to prevent errors if authorData is undefined
 
   return (
     <div id="wrapper">
@@ -42,20 +65,19 @@ const Author = () => {
         <section aria-label="section">
           <div className="container">
             <div className="row">
-            {authorData.map((data) => (
-              <div className="col-md-12">
+              <div className="col-md-12" key={id}>
+                {/* Profile Section */}
                 <div className="d_profile de-flex">
                   <div className="de-flex-col">
                     <div className="profile_avatar">
-                      <img src={data.authorImage} alt="" />
-
+                      <img src={authorImage} alt={authorName} />
                       <i className="fa fa-check"></i>
                       <div className="profile_name">
                         <h4>
-                          {data.authorName}
-                          <span className="profile_username">{data.tag}</span>
+                          {authorName}
+                          <span className="profile_username">{tag}</span>
                           <span id="wallet" className="profile_wallet">
-                            {data.address}
+                            {address}
                           </span>
                           <button id="btn_copy" title="Copy Text">
                             Copy
@@ -66,7 +88,7 @@ const Author = () => {
                   </div>
                   <div className="profile_follow de-flex">
                     <div className="de-flex-col">
-                      <div className="profile_follower">{data.followers}</div>
+                      <div className="profile_follower">{followers} followers</div>
                       <Link to="#" className="btn-main">
                         Follow
                       </Link>
@@ -74,11 +96,10 @@ const Author = () => {
                   </div>
                 </div>
               </div>
-                ))} 
 
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-                  <AuthorItems />
+                  <AuthorItems authorId={authorId} />
                 </div>
               </div>
             </div>

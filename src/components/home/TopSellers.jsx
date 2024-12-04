@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import AuthorImage from "../../images/author_thumbnail.jpg";
 import axios from "axios";
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Import the AOS styles
 
 const TopSellers = () => {
   const [sellers, setSellers] = useState([]);
@@ -18,6 +19,14 @@ const TopSellers = () => {
 
   useEffect(() => {
     getSellers();
+  }, []);
+
+  useEffect(() => {
+    // Initialize AOS
+    AOS.init({
+      duration: 1300,  // Animation duration 
+      once: true,      
+    });
   }, []);
 
   if (loading) {
@@ -55,7 +64,7 @@ const TopSellers = () => {
   }
 
   return (
-    <section id="section-popular" className="pb-5">
+    <section id="section-popular" className="pb-5" >
       <div className="container">
         <div className="row">
           <div className="col-lg-12">

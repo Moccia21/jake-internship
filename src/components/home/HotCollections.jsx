@@ -4,7 +4,8 @@ import axios from "axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Skeleton from "react-loading-skeleton";
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Import the AOS styles
 
 const HotCollections = () => {
   const [nfts, setNfts] = useState([]);
@@ -20,6 +21,14 @@ const HotCollections = () => {
 
   useEffect(() => {
     getNFT();
+  }, []);
+
+  useEffect(() => {
+    // Initialize AOS
+    AOS.init({
+      duration: 1300,  // Animation duration 
+      once: true,      
+    });
   }, []);
 
   const settings = {
@@ -54,7 +63,7 @@ const HotCollections = () => {
   // If loading, show skeleton loaders instead of real content
   if (loading) {
     return (
-      <section id="section-collections" className="no-bottom">
+      <section id="section-collections" className="no-bottom" data-aos="fade-in">
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
@@ -67,10 +76,10 @@ const HotCollections = () => {
               <div className="slider">
                 <Slider {...settings}>
                   {[...Array(4)].map((_, index) => (
-                    <div key={index} className="item skeleton-item">
+                    <div key={index}>
                       <div
-                        className="nft_coll"
-                        style={{ margin: "0 10px 15px 0" }}
+                        className="nft_coll item skeleton-item"
+                        style={{ margin: "0 20px 15px 0" }}
                       >
                         <div className="nft_wrap">
                           <div className="skeleton-image"></div>
@@ -98,7 +107,7 @@ const HotCollections = () => {
   }
 
   return (
-    <section id="section-collections" className="no-bottom">
+    <section id="section-collections" className="no-bottom" data-aos="fade-in">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">

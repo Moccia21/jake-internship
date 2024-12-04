@@ -99,10 +99,6 @@ const ItemDetails = () => {
     );
   }
 
-  if (!nftItem) {
-    return <div>No item found</div>;  // Handle case where no data is found
-  }
-
   // Destructuring nftItem to extract data for easier use in JSX
   const {
     title,
